@@ -4,3 +4,5 @@ elm-stuff
 repl-temp-*
 #compiled output
 build
+
+elmjutsu-config.json
