@@ -74,16 +74,38 @@ viewInput t p v toMsg =
 
 viewValidation : Model -> Html msg
 viewValidation model =
-    if model.password == model.passwordAgain then
-        if String.length model.password > 8 then
-            if String.any Char.isUpper model.password && String.any Char.isLower model.password && String.any Char.isDigit model.password then
-                div [ style "color" "green" ] [ text "OK" ]
+    let
+        ( messagecolor, message ) =
+            validation model
+    in
+    div [ style "color" messagecolor ] [ text message ]
 
-            else
-                div [ style "color" "red" ] [ text "Password must contain both upper- and lower-case letters as well as at least one number" ]
 
-        else
-            div [ style "color" "red" ] [ text "Password must be at least 8 characters" ]
+validation : Model -> ( String, String )
+validation model =
+    let
+        password =
+            model.password
+
+        passwordAgain =
+            model.passwordAgain
+    in
+    if not (password == passwordAgain) then
+        ( "red", "Passwords do not match!" )
+
+    else if String.length password < 8 then
+        ( "red", "Password must be at least 8 characters" )
+
+    else if not (validationMixedCase password) then
+        ( "red", "Passwords must contain both upper and lower-case letters" )
+
+    else if not (String.any Char.isDigit password) then
+        ( "red", "Passwords must contain at least one number" )
 
     else
-        div [ style "color" "red" ] [ text "Passwords do not match!" ]
+        ( "green", "OK" )
+
+
+validationMixedCase : String -> Bool
+validationMixedCase password =
+    String.any Char.isUpper password && String.any Char.isLower password
