@@ -4,6 +4,8 @@ import Browser
 import Html exposing (..)
 import Html.Events exposing (..)
 import Random
+import Svg exposing (..)
+import Svg.Attributes exposing (..)
 
 
 
@@ -33,13 +35,13 @@ type Face
 
 
 type alias Model =
-    { dieFace : Int
+    { dieFace : Face
     }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model 1
+    ( Model One
     , Cmd.none
     )
 
@@ -50,18 +52,18 @@ init _ =
 
 type Msg
     = Roll
-    | NewFace Int
+    | NewFace Face
 
 
-roll : Random.Generator Int
+roll : Random.Generator Face
 roll =
     Random.weighted
-        ( 10, 1 )
-        [ ( 10, 2 )
-        , ( 10, 3 )
-        , ( 10, 4 )
-        , ( 20, 5 )
-        , ( 40, 6 )
+        ( 10, One )
+        [ ( 10, Two )
+        , ( 10, Three )
+        , ( 10, Four )
+        , ( 20, Five )
+        , ( 40, Six )
         ]
 
 
@@ -95,28 +97,60 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div []
-        [ h1 [] [ text (String.fromInt model.dieFace) ]
-        , button [ onClick Roll ] [ text "Roll" ]
+        [ h1 [] [ fromFace model.dieFace ]
+        , button [ onClick Roll ] [ Html.text "Roll" ]
         ]
 
 
-fromFace : Face -> String
+fromFace : Face -> Html Msg
 fromFace face =
     case face of
         One ->
-            "1"
+            svg
+                [ width "120", height "120", viewBox "0 0 120 120" ]
+                [ circle [ cx "60", cy "60", r "5" ] [] ]
 
         Two ->
-            "2"
+            svg
+                [ width "120", height "120", viewBox "0 0 120 120" ]
+                [ circle [ cx "40", cy "40", r "5" ] []
+                , circle [ cx "80", cy "80", r "5" ] []
+                ]
 
         Three ->
-            "3"
+            svg
+                [ width "120", height "120", viewBox "0 0 120 120" ]
+                [ circle [ cx "40", cy "40", r "5" ] []
+                , circle [ cx "60", cy "60", r "5" ] []
+                , circle [ cx "80", cy "80", r "5" ] []
+                ]
 
         Four ->
-            "4"
+            svg
+                [ width "120", height "120", viewBox "0 0 120 120" ]
+                [ circle [ cx "40", cy "40", r "5" ] []
+                , circle [ cx "80", cy "40", r "5" ] []
+                , circle [ cx "40", cy "80", r "5" ] []
+                , circle [ cx "80", cy "80", r "5" ] []
+                ]
 
         Five ->
-            "5"
+            svg
+                [ width "120", height "120", viewBox "0 0 120 120" ]
+                [ circle [ cx "40", cy "40", r "5" ] []
+                , circle [ cx "80", cy "40", r "5" ] []
+                , circle [ cx "60", cy "60", r "5" ] []
+                , circle [ cx "40", cy "80", r "5" ] []
+                , circle [ cx "80", cy "80", r "5" ] []
+                ]
 
         Six ->
-            "6"
+            svg
+                [ width "120", height "120", viewBox "0 0 120 120" ]
+                [ circle [ cx "40", cy "40", r "5" ] []
+                , circle [ cx "80", cy "40", r "5" ] []
+                , circle [ cx "40", cy "60", r "5" ] []
+                , circle [ cx "80", cy "60", r "5" ] []
+                , circle [ cx "40", cy "80", r "5" ] []
+                , circle [ cx "80", cy "80", r "5" ] []
+                ]
