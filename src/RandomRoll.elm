@@ -33,13 +33,13 @@ type Face
 
 
 type alias Model =
-    { dieFace : Face
+    { dieFace : Int
     }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model One
+    ( Model 1
     , Cmd.none
     )
 
@@ -50,18 +50,18 @@ init _ =
 
 type Msg
     = Roll
-    | NewFace Face
+    | NewFace Int
 
 
-roll : Random.Generator Face
+roll : Random.Generator Int
 roll =
     Random.weighted
-        ( 10, One )
-        [ ( 10, Two )
-        , ( 10, Three )
-        , ( 10, Four )
-        , ( 20, Five )
-        , ( 40, Six )
+        ( 10, 1 )
+        [ ( 10, 2 )
+        , ( 10, 3 )
+        , ( 10, 4 )
+        , ( 20, 5 )
+        , ( 40, 6 )
         ]
 
 
@@ -95,7 +95,7 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div []
-        [ h1 [] [ text (fromFace model.dieFace) ]
+        [ h1 [] [ text (String.fromInt model.dieFace) ]
         , button [ onClick Roll ] [ text "Roll" ]
         ]
 
