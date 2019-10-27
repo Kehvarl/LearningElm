@@ -108,49 +108,49 @@ fromFace face =
         One ->
             svg
                 [ width "120", height "120", viewBox "0 0 120 120" ]
-                [ circle [ cx "60", cy "60", r "5" ] [] ]
+                [ dotMaker ( 60, 60 ) ]
 
         Two ->
             svg
                 [ width "120", height "120", viewBox "0 0 120 120" ]
-                [ circle [ cx "40", cy "40", r "5" ] []
-                , circle [ cx "80", cy "80", r "5" ] []
-                ]
+                (List.map
+                    dotMaker
+                    [ ( 40, 40 ), ( 80, 80 ) ]
+                )
 
         Three ->
             svg
                 [ width "120", height "120", viewBox "0 0 120 120" ]
-                [ circle [ cx "40", cy "40", r "5" ] []
-                , circle [ cx "60", cy "60", r "5" ] []
-                , circle [ cx "80", cy "80", r "5" ] []
-                ]
+                (List.map
+                    dotMaker
+                    [ ( 40, 40 ), ( 60, 60 ), ( 80, 80 ) ]
+                )
 
         Four ->
             svg
                 [ width "120", height "120", viewBox "0 0 120 120" ]
-                [ circle [ cx "40", cy "40", r "5" ] []
-                , circle [ cx "80", cy "40", r "5" ] []
-                , circle [ cx "40", cy "80", r "5" ] []
-                , circle [ cx "80", cy "80", r "5" ] []
-                ]
+                (List.map
+                    dotMaker
+                    [ ( 40, 40 ), ( 80, 40 ), ( 40, 80 ), ( 80, 80 ) ]
+                )
 
         Five ->
             svg
                 [ width "120", height "120", viewBox "0 0 120 120" ]
-                [ circle [ cx "40", cy "40", r "5" ] []
-                , circle [ cx "80", cy "40", r "5" ] []
-                , circle [ cx "60", cy "60", r "5" ] []
-                , circle [ cx "40", cy "80", r "5" ] []
-                , circle [ cx "80", cy "80", r "5" ] []
-                ]
+                (List.map
+                    dotMaker
+                    [ ( 40, 40 ), ( 80, 40 ), ( 60, 60 ), ( 40, 80 ), ( 80, 80 ) ]
+                )
 
         Six ->
             svg
                 [ width "120", height "120", viewBox "0 0 120 120" ]
-                [ circle [ cx "40", cy "40", r "5" ] []
-                , circle [ cx "80", cy "40", r "5" ] []
-                , circle [ cx "40", cy "60", r "5" ] []
-                , circle [ cx "80", cy "60", r "5" ] []
-                , circle [ cx "40", cy "80", r "5" ] []
-                , circle [ cx "80", cy "80", r "5" ] []
-                ]
+                (List.map
+                    dotMaker
+                    [ ( 40, 40 ), ( 80, 40 ), ( 40, 60 ), ( 80, 60 ), ( 40, 80 ), ( 80, 80 ) ]
+                )
+
+
+dotMaker : ( Int, Int ) -> Svg msg
+dotMaker ( x, y ) =
+    circle [ cx (String.fromInt x), cy (String.fromInt y), r "5" ] []
