@@ -36,12 +36,13 @@ type Face
 
 type alias Model =
     { dieFace : Face
+    , dieFace2 : Face
     }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model One
+    ( Model One One
     , Cmd.none
     )
 
@@ -53,6 +54,7 @@ init _ =
 type Msg
     = Roll
     | NewFace Face
+    | NewFace2 Face
 
 
 roll : Random.Generator Face
@@ -76,7 +78,12 @@ update msg model =
             )
 
         NewFace newFace ->
-            ( Model newFace
+            ( Model newFace One
+            , Random.generate NewFace2 roll
+            )
+
+        NewFace2 newFace ->
+            ( { model | dieFace2 = newFace }
             , Cmd.none
             )
 
@@ -97,7 +104,8 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div []
-        [ h1 [] [ fromFace model.dieFace ]
+        [ fromFace model.dieFace
+        , fromFace model.dieFace2
         , button [ onClick Roll ] [ Html.text "Roll" ]
         ]
 
