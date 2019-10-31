@@ -1,4 +1,4 @@
-module Main exposing (Model, init, main)
+module FormInputValidation exposing (Model, init, main)
 
 import Browser
 import Html exposing (..)

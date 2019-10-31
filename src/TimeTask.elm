@@ -1,4 +1,4 @@
-module Main exposing (Model, main)
+module TimeTask exposing (Model, main)
 
 import Browser
 import Html exposing (..)

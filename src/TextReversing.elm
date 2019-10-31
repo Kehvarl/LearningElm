@@ -1,4 +1,4 @@
-module Main exposing (..)
+module TextReversing exposing (..)
 
 import Browser
 import Html exposing (Attribute, Html, div, input, text)

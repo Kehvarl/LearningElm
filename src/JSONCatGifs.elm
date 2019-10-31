@@ -1,4 +1,4 @@
-module Main exposing (..)
+module JSONCatGifs exposing (..)
 
 import Browser
 import Html exposing (..)

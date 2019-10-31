@@ -1,4 +1,4 @@
-module Main exposing (main)
+module RaondomRoll exposing (main)
 
 import Browser
 import Html exposing (..)

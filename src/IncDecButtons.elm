@@ -1,4 +1,4 @@
-module Main exposing (Msg(..), main)
+module IncDecButtons exposing (Msg(..), main)
 
 import Browser
 import Html exposing (Html, button, div, text)
