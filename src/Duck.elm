@@ -60,6 +60,7 @@ view model =
             [ placeholder "Quack?"
             , value model.question
             , onEnter Submit
+            , onInput Change
             ]
             []
         , Html.button [ onClick Submit ] [ text "Quack!" ]
