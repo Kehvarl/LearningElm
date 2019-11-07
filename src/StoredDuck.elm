@@ -27,15 +27,27 @@ port setStorage : Model -> Cmd msg
 --MODEL
 
 
+type alias Question =
+    { id : Int
+    , question : String
+    }
+
+
 type alias Model =
     { question : String
-    , content : List String
+    , uid : Int
+    , content : List Question
     }
+
+
+newQuestion : Model -> Question
+newQuestion model =
+    Question model.uid model.question
 
 
 init : Maybe Model -> ( Model, Cmd Msg )
 init maybeModel =
-    ( Maybe.withDefault { question = "", content = [] } maybeModel
+    ( Maybe.withDefault { question = "", uid = 0, content = [] } maybeModel
     , Cmd.none
     )
 
@@ -47,6 +59,7 @@ init maybeModel =
 type Msg
     = Change String
     | Submit
+    | Delete Int
 
 
 updateWithStorage : Msg -> Model -> ( Model, Cmd Msg )
@@ -63,13 +76,18 @@ updateWithStorage msg model =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Change newQuestion ->
-            ( { model | question = newQuestion }
+        Change questionString ->
+            ( { model | question = questionString }
             , Cmd.none
             )
 
         Submit ->
-            ( { model | content = model.content ++ [ model.question ], question = "" }
+            ( { model | content = model.content ++ [ newQuestion model ], question = "", uid = model.uid + 1 }
+            , Cmd.none
+            )
+
+        Delete id ->
+            ( { model | content = List.filter (\c -> c.id /= id) model.content }
             , Cmd.none
             )
 
@@ -89,7 +107,15 @@ view model =
             ]
             []
         , Html.button [ onClick Submit ] [ text "Quack!" ]
-        , Html.ul [] <| List.map (\c -> Html.li [] [ text c ]) model.content
+        , Html.ul [] <| List.map viewQuestion model.content
+        ]
+
+
+viewQuestion : Question -> Html Msg
+viewQuestion question =
+    Html.li []
+        [ text question.question
+        , Html.button [ onClick (Delete question.id) ] [ text "UnQuack" ]
         ]
 
 
